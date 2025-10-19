@@ -1,0 +1,61 @@
+<footer class="text-left border-top px-5 py-3">
+  <p>&copy; <%= new Date().getFullYear() %> Oluwanifesimi Olubunmi</p>
+</footer>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const editModal = document.getElementById('editModal');
+        editModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget; // Button that triggered the modal
+            const id = button.getAttribute('data-id');
+            const title = button.getAttribute('data-title');
+            const description = button.getAttribute('data-description');
+
+            // Fill modal fields
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-title').value = title;
+            document.getElementById('edit-description').value = description;
+        });
+    </script>
+    <script>
+        const viewModal = document.getElementById('viewModal');
+        viewModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget; // Button that triggered the modal
+            const title = button.getAttribute('data-title');
+            const description = button.getAttribute('data-description');
+            const date = button.getAttribute('data-date');
+
+            // Fill modal fields
+            document.getElementById('view-title').textContent = title;
+            document.getElementById('view-description').textContent = description;
+            document.getElementById('view-date').textContent = date;
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('confirmDeleteModal');
+            const form = document.getElementById('confirmDeleteForm');
+
+            modal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const articleId = button.getAttribute('data-article-id');
+                form.action = `/delete/${articleId}`;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 3000);
+                const url = new URL(window.location);
+                url.searchParams.delete('deleted');
+                window.history.replaceState({}, document.title, url.pathname);
+            }
+        });
+    </script>
+</body>
+</html>
